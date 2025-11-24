@@ -30,8 +30,6 @@
 
 from time import sleep
 
-from time import sleep
-
 balance = 1000
 
 def bank_operations(action):
