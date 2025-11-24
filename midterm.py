@@ -39,7 +39,7 @@ def bank_operations(action):
     global balance
 
     if action == "ბალანსი":
-        return f"თქვენი ბალანსია {balance}"
+        return f"თქვენი ბალანსია: {balance}"
 
     elif action == "გატანა":
         try:
@@ -68,6 +68,6 @@ def bank_operations(action):
         return "ესეთი ქმედება არ არსებობს! სცადეთ ხელახლა"
     
 
-print(bank_operations(input("აირჩიეთ ქმედება (ბალანსი, შეტანა, გამოტანა, გამოსვლა): ").lower()))
+print(bank_operations(input("აირჩიეთ ქმედება (ბალანსი, შეტანა, გატანა, გამოსვლა): ").lower()))
 
         
