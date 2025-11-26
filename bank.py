@@ -1,41 +1,84 @@
 # ბანკომატი
-
+import os
 from time import sleep
 
-balance = 1000
+file = "atm_balance.txt"
 
-def bank_operations(action):
 
-    global balance
-
-    if action == "ბალანსი":
-        return f"თქვენი ბალანსია: {balance}"
-
-    elif action == "გატანა":
+if not os.path.exists(file):
+    while True:
         try:
-            amount = int(input("რამდენის გამოტანა გსურთ?: "))
-            if amount > balance:
-                return "არ გაქვთ საკმარისი თანხა"
-            balance -= amount
-            return f"ახალი ბალანსია: {balance}"
+            balance = float(input("შეიყვანე საწყისი ბალანსი:  "))
+            if balance < 0:
+                print("ბალანსი შეუძლებელია იყოს უარყოფითი!!")
+                continue
+            break
         except ValueError:
-            return "არასწორი შეყვანის ტიპი !"
+            print("შეიყვანეთ რიცხვი!!")
+    with open(file, "w") as f:
+        f.write(str(balance))
 
-    elif action == "შეტანა":
-        try:
-            amount = int(input("რამდენის შეტანა გსურთ?: "))
-            if amount <= 0:
-                return "უარყოფითი რიცხვის შეტანა შეუძლებელია!"
-            balance += amount
-            return f"ახალი ბალანსი: {balance}"
-        except ValueError:
-            return "არასწორი შეყვანის ტიპი!"
-    elif action == "გამოსვლა":
-        sleep(1)
-        return "გამოსვლა..."
 
-    else:
-        return "ესეთი ქმედება არ არსებობს! სცადეთ ხელახლა"
-    
+def get_balance():
+    with open(file, "r") as f:
+        return float(f.read().strip())
 
-print(bank_operations(input("აირჩიეთ ქმედება (ბალანსი, შეტანა, გატანა, გამოსვლა): ").lower()))
+
+def withdraw(amount):
+    balance = get_balance()
+    if amount > balance:
+        print("არასაკმარისი ბალანსი")
+        return
+    balance -= amount
+    with open(file, "w") as f:
+        f.write(str(balance))
+    print(f"თანხის გატანა წარმატებით შესრულდა! ახალი ბალანსია: {balance}")
+
+
+def deposit(amount):
+    balance = get_balance()
+    balance += amount
+    with open(file, "w") as f:
+        f.write(str(balance))
+    print(f"თანხის შეტანა წარმატებით შესრულდა! ახალი ბალანსია: {balance}")
+
+# მენიუ
+def atm():
+    while True:
+        print("\n--- ATM ---")
+        print("1. ბალანსი")
+        print("2. თანხის გატანა")
+        print("3. თანხის შეტანა")
+        print("4. Exit")
+        choice = input("აირჩიე: ")
+
+        if choice == "1":
+            print(f"შენი ბალანსია: {get_balance()}")
+        elif choice == "2":
+            try:
+                amount = float(input("შეიყვანე გასატანი თანხა: "))
+                if amount <= 0:
+                    print("შეიყვანე დადებითი რიცხვი!")
+                    continue
+                withdraw(amount)
+            except ValueError:
+                print("თანხა უნდა იყოს რიცხვი!!")
+        elif choice == "3":
+            try:
+                amount = float(input("შეიყვანე შესატანი თანხა: "))
+                if amount <= 0:
+                    print("შეიყვანე დადებითი რიცხვი!")
+                    continue
+                deposit(amount)
+            except ValueError:
+                print("თანხა უნდა იყოს რიცხვი!!")
+        elif choice == "4":
+            sleep(1)
+            print("გამოსვლა...")
+            sleep(2)
+            break
+        else:
+            print("არჩევანი არასწორია! ხელახლა სცადეთ")
+
+atm()
+
