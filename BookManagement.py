@@ -4,6 +4,9 @@ from time import sleep
 class Book:
 
     def __init__(self, title : str, author : str, date : int):
+        '''
+        ეს არის წიგნის კლასი სადაც ვქმნით წიგნის ობიექტს სახელით, ავტორით და გამოშვების თარიღით
+        '''
         self._title = title
         self._author = author
         self._date = date
@@ -13,6 +16,13 @@ class Book:
 class BookManager:
 
     def __init__(self, file = "library.json"):
+        '''
+        ეს არის ერთგვარი ბიბლიოთეკა, რომელშიც ასახულია 4 მეთოდი, წიგნის დამატება, მისი შენახვა
+        json ფაილში, ყველა წიგნის ნახვა, და წიგნის ძებნა სათაურის მიხედვით. მთავარი მეთოდი კი არის 
+        სტატიკური მეთოდი, რომელიც არის კლასის ნაწილი და ასრულებს interface ფუნქციებს რათა კლასი გახდეს
+        მომხმარებლზე მორგებული. ინტერფეისში და კლასში დაცულია შესაბამისი ვალიდაციები. 
+
+        '''
         self.__shelf = []
         self.file = file
 
@@ -31,7 +41,7 @@ class BookManager:
         if self.__shelf == []:
             print("\nწიგნები არ არის დამატებული ბიბლიოთეკაში!\n")
         else:
-            print("\n")
+            print("\n--- თქვენი წიგნებია ---\n")
             for book in self.__shelf:
                 count += 1
                 print(f"{count}. წიგნი - {book["Title"]}, ავტორი - {book["Author"]}, გამოშვების თარიღი - {book["Date"]}")
@@ -97,7 +107,6 @@ class BookManager:
                 print("\n--- თქვენი არჩევანი არ არსებობს! სცადეთ ხელახლა! ---\n")
                 continue
 
-                
                 
 
 manager = BookManager()

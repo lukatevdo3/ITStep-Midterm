@@ -1,12 +1,18 @@
-# Guess the number Game
+# გამოიცანი რიცხვი 1-დან 100-მდე
 
 import random
 
 
-num = random.randint(1,101)
+num = random.randint(1,101) # ეს ფუნქცია ირჩევს რიცხვებს შემთხვევითობის პრინციპით 1-დან 100მდე
 count = 1
 print("გამოიცანით რიცხვი 1-დან 100-მდე")
-while True:
+while True: 
+
+    '''
+    სანამ user არ გამოიცნობს რიცხვს იქამდე მისცემს მინიშნებებს და მცდელობებს
+    რათა გამოიცნოს რიცხვი
+    '''
+    
     try:
         guess = int(input(f"რიცხვი (მცდელობა {count}): "))
         if guess < 0:
