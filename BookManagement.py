@@ -26,6 +26,7 @@ class BookManager:
         self.__shelf = []
         self.file = file
 
+    
     def add_book(self, book):
         book1 = {"Author" : book._author, "Title" : book._title, "Date" : book._date}
         self.__shelf.append(book1)
@@ -36,6 +37,7 @@ class BookManager:
         with open(self.file, 'w', encoding = 'utf') as f:
             json.dump(self.__shelf, f, indent = 2)
 
+    @property
     def show_books(self):
         count = 0
         if self.__shelf == []:
@@ -47,7 +49,7 @@ class BookManager:
                 print(f"{count}. წიგნი - {book["Title"]}, ავტორი - {book["Author"]}, გამოშვების თარიღი - {book["Date"]}")
             
             print("\n")
-    
+
     def find_book(self, title):
         count = 0
         books = [book for book in self.__shelf if title.lower() in book["Title"].lower()]
@@ -92,7 +94,7 @@ class BookManager:
                 except ValueError:
                     print("\n--- არასწორი პარამეტრები! სცადეთ ხელახლა ---\n")
             elif choice.strip() == "2":
-                manager.show_books()
+                manager.show_books
             elif choice.strip() == "3":
                 title_search = input("\nშეიყვანეთ წიგნის დასახელება: ")
                 manager.find_book(title_search)
