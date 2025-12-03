@@ -42,6 +42,7 @@ class BookManager:
         count = 0
         if self.__shelf == []:
             print("\nწიგნები არ არის დამატებული ბიბლიოთეკაში!\n")
+            return
         else:
             print("\n--- თქვენი წიგნებია ---\n")
             for book in self.__shelf:
@@ -55,12 +56,25 @@ class BookManager:
         books = [book for book in self.__shelf if title.lower() in book["Title"].lower()]
         if self.__shelf == []:
             print("\nწიგნები არ არის დამატებული ბიბლიოთეკაში!\n")
+            return
         else:
             for book in books:
                 count += 1
                 print(f"\n{count}. წიგნი - {book["Title"]}, ავტორი - {book["Author"]}, გამოშვების თარიღი - {book["Date"]}")
     
-            print(f"\nთქვენი სასურველი წიგნების რაოდენობაა {count}\n")    
+            print(f"\nთქვენი სასურველი წიგნების რაოდენობაა {count}\n")
+
+    def remove_book(self, title):
+        new_shelf = [book for book in self.__shelf if book["Title"].lower() != title.lower()]
+
+        if len(new_shelf) == len(self.__shelf):
+            print("\nასეთი წიგნი არ არსებობს!\n")
+            return
+
+        self.__shelf = new_shelf
+        self.save_book()
+        print(f"\nწიგნი \"{title}\" წაიშალა ბიბლიოთეკიდან!\n")
+    
 
     @staticmethod
     def interface():
@@ -70,7 +84,8 @@ class BookManager:
             print("1. წიგნის დამატება")
             print("2. წიგნების ნახვა")
             print("3. წიგნის ძებნა")
-            print("4. გამოსვლა")
+            print("4. წიგნის წაშლა")
+            print("5. გამოსვლა")
 
             choice = input("აირჩიე: ")
             if choice.strip() == "1":
@@ -99,6 +114,9 @@ class BookManager:
                 title_search = input("\nშეიყვანეთ წიგნის დასახელება: ")
                 manager.find_book(title_search)
             elif choice.strip() == "4":
+                title_search = input("\nშეიყვანეთ წიგნის დასახელება: ")
+                manager.remove_book(title_search)
+            elif choice.strip() == "5":
                 sleep(1)
                 print("\nმადლობა მოხმარებისთვის!")
                 sleep(0.75)
@@ -112,7 +130,7 @@ class BookManager:
                 
 
 manager = BookManager()
-manager.interface()
+manager.interface() 
 
 
     
